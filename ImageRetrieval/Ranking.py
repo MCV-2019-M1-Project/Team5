@@ -2,7 +2,8 @@ from ImageDescriptors.Histogram import *
 from ImageDescriptors.Similarity import *
 import heapq
 
-#Task 3 is here
+
+# Task 3 is here
 def compare(img, hist, method):
     """TODO: Use different distances"""
     h = Histogram(img).histogram()
@@ -22,10 +23,10 @@ class RankingSimilar:
 
     def __init__(self, query, candidates, k):
         self.query = query
-        self.candidates = candidates
+        self.candidates = enumerate(sorted(candidates), 1)
         self.k = k
 
     def findKMostSimilar(self, method):
         """TODO: Use different distances"""
         hquery = Histogram(self.query).histogram()
-        return heapq.nsmallest(self.k, self.candidates, key=lambda img: compare(img, hquery, method))
+        return heapq.nsmallest(self.k, self.candidates, key=lambda img: compare(img[1], hquery, method))
