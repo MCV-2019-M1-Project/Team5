@@ -1,11 +1,21 @@
-from ImageDescriptors import Histogram, Similarity
+from ImageDescriptors.Histogram import *
+from ImageDescriptors.Similarity import *
 import heapq
 
-
-def compare(img, hist):
+#Task 3 is here
+def compare(img, hist, method):
     """TODO: Use different distances"""
-    h = Histogram.Histogram(img)
-    return Similarity.chisquared(hist, h)
+    h = Histogram(img).histogram()
+    if method == "chi":
+        similarity = chisquared(hist, h)
+    elif method == "intersection":
+        similarity = intersection(hist, h)
+    elif method == "hellinger":
+        similarity = hellinger(hist, h)
+    else:
+        raise Exception("Invalid compare method")
+
+    return similarity
 
 
 class RankingSimilar:
@@ -15,7 +25,7 @@ class RankingSimilar:
         self.candidates = candidates
         self.k = k
 
-    def findKMostSimilar(self):
+    def findKMostSimilar(self, method):
         """TODO: Use different distances"""
-        hquery = Histogram.Histogram(self.query)
-        return heapq.nsmallest(self.k, self.candidates, key=lambda img: compare(img, hquery))
+        hquery = Histogram(self.query).histogram()
+        return heapq.nsmallest(self.k, self.candidates, key=lambda img: compare(img, hquery, method))
