@@ -29,4 +29,6 @@ class RankingSimilar:
     def findKMostSimilar(self, method):
         """TODO: Use different distances"""
         hquery = Histogram(self.query).histogram()
-        return heapq.nsmallest(self.k, self.candidates, key=lambda img: compare(img[1], hquery, method))
+        return heapq.nsmallest(self.k,
+                               self.candidates,
+                               key=lambda index_image_tuple: compare(index_image_tuple[1], hquery, method))

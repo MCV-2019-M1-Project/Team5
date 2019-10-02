@@ -11,8 +11,6 @@ def find_k_most_similar(query):
         if file.endswith(".jpg"):
             candidates.append(os.path.join(BBDD_PATH, file))
 
-    for (i,j) in enumerate(sorted(candidates), 1):
-        print (i,j)
     ranking = RankingSimilar(query, candidates, K)
     return ranking.findKMostSimilar("chi")
 
