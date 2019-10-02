@@ -1,0 +1,1 @@
+from ImageRetrieval import Ranking
