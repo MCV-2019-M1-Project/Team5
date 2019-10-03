@@ -2,16 +2,7 @@ from ImageRetrieval.Ranking import RankingSimilar
 from definitions import QSD1_PATH, BBDD_PATH, K, QSD1_CORRESPONDANCE_FILE, QSD1_RESULTS_FILE
 import pickle
 import os
-import ml_metrics as metrics
-
-
-def evaluateMAP(actual, predicted):
-    return metrics.mapk(actual, predicted, K)
-
-
-def evaluateAP(actual, predicted):
-    return metrics.apk(actual, predicted, K)
-
+from Evaluation import RankingEvaluation
 
 if __name__ == "__main__":
 
@@ -53,7 +44,7 @@ if __name__ == "__main__":
         results_q1.append(results_index)
         actuals_q1.append([correspondance_dict[i]])
 
-    print(evaluateMAP(actuals_q1, results_q1))
+    print(RankingEvaluation.evaluateMAP(actuals_q1, results_q1))
 
 
     """Write results"""
