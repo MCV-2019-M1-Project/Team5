@@ -29,7 +29,7 @@ def compare(img, queryhist, method):
 class RankingSimilar:
 
     def __init__(self, candidates, k, precompute=True):
-        idx_images = enumerate(sorted(candidates), 1)
+        idx_images = enumerate(sorted(candidates), 0)
         self.precomputed = precompute
         if self.precomputed:
             self.candidates = []
