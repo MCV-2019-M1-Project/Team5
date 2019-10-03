@@ -1,13 +1,12 @@
 from ImageRetrieval.Ranking import RankingSimilar
-from definitions import QSD1_PATH, BBDD_PATH, K, QSD1_CORRESPONDANCE_FILE, QSD1_RESULTS_FILE
+from definitions import QSD1_PATH, QSD2_PATH, BBDD_PATH, K, QSD1_CORRESPONDANCE_FILE, QSD1_RESULTS_FILE
 import pickle
 import os
 from Evaluation import RankingEvaluation
+from ImageDescriptors import *
 
-if __name__ == "__main__":
 
-    """Do some sort of grid search among parameters"""
-
+def runQ1Ranking():
     """Load all candidates from BBDD pictures"""
     bbddd_candidates = []
     for file in os.listdir(BBDD_PATH):
@@ -46,7 +45,23 @@ if __name__ == "__main__":
 
     print(RankingEvaluation.evaluateMAP(actuals_q1, results_q1))
 
-
     """Write results"""
     with open(QSD1_RESULTS_FILE, 'wb') as f:
         pickle.dump(results_q1, f)
+
+def runQ2Masks():
+    """Load all images from Q1"""
+    files_q2 = []
+    for file in os.listdir(QSD2_PATH):
+        if file.endswith(".jpg"):
+            path = os.path.join(QSD2_PATH, file)
+            files_q2.append(path)
+
+    for (i, file_q2) in enumerate(sorted(files_q2), 0):
+        hist = Histogram.MaskedHistogram(file_q2)
+        hist.histogram()
+
+
+if __name__ == "__main__":
+    #runQ1Ranking()
+    runQ2Masks()
