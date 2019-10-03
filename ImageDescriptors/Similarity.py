@@ -1,7 +1,7 @@
 import scipy.spatial.distance as dist
 import cv2
 
-
+"""Define metrics that might potentially be used"""
 # TASK 2 is here
 def euclidean(h1, h2):
     return dist.euclidean(h1, h2)
