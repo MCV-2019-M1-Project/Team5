@@ -6,13 +6,11 @@ import ml_metrics as metrics
 
 
 def evaluateMAP(actual, predicted):
-    print(actual)
-    print(predicted)
-    return metrics.mapk(actual, predicted)
+    return metrics.mapk(actual, predicted, K)
 
 
 def evaluateAP(actual, predicted):
-    return metrics.apk(actual, predicted)
+    return metrics.apk(actual, predicted, K)
 
 
 if __name__ == "__main__":
@@ -52,6 +50,6 @@ if __name__ == "__main__":
         similars = ranking.findKMostSimilar(file_q1, "chi")
         results_index = [index for index, path in similars]
         results_q1.append(results_index)
-        actuals_q1.append(correspondance_dict[i])
+        actuals_q1.append([correspondance_dict[i]])
 
-    evaluateMAP(results_q1, actuals_q1)
+    evaluateMAP(actuals_q1, results_q1)
