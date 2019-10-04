@@ -18,7 +18,7 @@ Task 4: Evaluation using map@k
 Task 5: Background removal using color (QS2). Compute descriptor on foreground (painting)
 Task 6: Evaluation of picture masks and retrieval system (QS2)
 
-###########The structure of the code
+###The structure of the code
 --- Readme.md                   // help
 --- Application                 // main part to solve the result
     --- application.py          // run the _main_ to output all the results
