@@ -19,20 +19,20 @@ Task 5: Background removal using color (QS2). Compute descriptor on foreground (
 Task 6: Evaluation of picture masks and retrieval system (QS2)
 
 ###########The structure of the code
-©À©¤©¤ Readme.md                   // help
-©À©¤©¤ Application                 // main part to solve the result
-©¦   ©À©¤©¤ application.py          // run the _main_ to output all the results
-©À©¤©¤ data                        // data should be here with the default setting. if not, modify the definitions.py
-©À©¤©¤ Evaluation                  // functions for evaluating the result (for Task 4,6)
-©¦   ©À©¤©¤ MaskEvaluation.py       // evaluate the mask (for Task 6)
-©¦   ©À©¤©¤ RankingEvaluation.py    // evaluate the retrieval system (for Task 4)
-©À©¤©¤ ImageDescriptors            // Compute image descriptors and Similarity
-©¦   ©À©¤©¤ Histogram.py            // define the histogram of both origin and masked pictures (for Task 1)
-©¦   ©À©¤©¤ Similarity.py           // calculate the similarity with 4 different methods (for Task 2)
-©À©¤©¤ ImageRetrieval              // rank the most similar pictures
-©¦   ©À©¤©¤ Ranking.py              // rank the similarity with different methods (for Task 3)
-©À©¤©¤ Mask                        // still improving the mask
-©À©¤©¤ definitions.py              // define the path of input, output and some global parameters
-©À©¤©¤ qsd1_results.pkl            // Best result for QSD1
-©À©¤©¤ qsd2_results.pkl            // Best result for QSD2
+--- Readme.md                   // help
+--- Application                 // main part to solve the result
+    --- application.py          // run the _main_ to output all the results
+--- data                        // data should be here with the default setting. if not, modify the definitions.py
+--- Evaluation                  // functions for evaluating the result (for Task 4,6)
+    --- MaskEvaluation.py       // evaluate the mask (for Task 6)
+    --- RankingEvaluation.py    // evaluate the retrieval system (for Task 4)
+--- ImageDescriptors            // Compute image descriptors and Similarity
+    --- Histogram.py            // define the histogram of both origin and masked pictures (for Task 1)
+    --- Similarity.py           // calculate the similarity with 4 different methods (for Task 2)
+--- ImageRetrieval              // rank the most similar pictures
+    --- Ranking.py              // rank the similarity with different methods (for Task 3)
+--- Mask                        // still improving the mask
+--- definitions.py              // define the path of input, output and some global parameters
+--- qsd1_results.pkl            // Best result for QSD1
+--- qsd2_results.pkl            // Best result for QSD2
 
