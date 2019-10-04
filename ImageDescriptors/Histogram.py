@@ -40,7 +40,8 @@ class MaskedHistogram(Histogram):
             np.asarray(im[:, :, 1] <= (max_rgb[1] + 2)) & np.asarray(im[:, :, 1] >= (max_rgb[1] - 2)) & \
             np.asarray(im[:, :, 2] <= (max_rgb[2] + 2)) & np.asarray(im[:, :, 2] >= (max_rgb[2] - 2)))
 
-        self.mask = mask.astype(np.uint8)
+        self.mask    = mask.astype(np.uint8)
+        self.maskimg = cv2.adaptiveThreshold(self.mask * 255, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 3, 0)
 
 
     @staticmethod

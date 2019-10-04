@@ -39,10 +39,13 @@ class RankingSimilar:
             self.candidates = idx_images
         self.k = k
 
-    def findKMostSimilar(self, queryImg, method):
+    def findKMostSimilar(self, queryImg, method, masks=False):
         """Compute the histogram of the query image and run the search by using a Heap based algorithm to find the k
         images with a smallest distance where the comparing function is passed as the key with a lambda function"""
-        hquery = Histogram(queryImg).histogram()
+        if not masks:
+            hquery = Histogram(queryImg).histogram()
+        else:
+            hquery = MaskedHistogram(queryImg).histogram()
 
         if self.precomputed:
             f = lambda index_hist_tuple: comparePreComputed(index_hist_tuple[1], hquery, method)
