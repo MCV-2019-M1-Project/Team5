@@ -9,6 +9,7 @@ QSD2_CORRESPONDANCE_FILE = QSD2_PATH + "gt_corresps.pkl"
 QSD1_RESULTS_FILE = ROOT_DIR + "/qsd1_results.pkl"
 QSD2_RESULTS_FILE = ROOT_DIR + "/qsd2_results.pkl"
 MASK_CORRESPONDANCE_RESULT_FILE = ROOT_DIR + "/mask_correspondance_result.pkl"
+MASK_STORE_PATH = ROOT_DIR + "/data/masks_results/"
 K = 10
 
 HIST_SIZE  = [256, 256, 256]
