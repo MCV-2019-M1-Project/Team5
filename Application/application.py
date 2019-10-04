@@ -19,6 +19,8 @@ def computeSearch(bbddd_candidates_files, query_files, correspondance_dict, mask
         if i in correspondance_dict:
             similars = ranking.findKMostSimilar(query_file, "hellinger", masks)
             results_index = [index for index, path in similars]
+            print(correspondance_dict[i])
+            print(results_index)
             predictions.append(results_index)
             actuals.append([correspondance_dict[i]])
 
@@ -50,8 +52,7 @@ def runRanking(bbdd_path, qs_path, qs_correspondance_path, qs_results_path, mask
     """Instantiate ranking object that will be able to find the most similar K pictures from candidates given a query image"""
     actuals, predictions = computeSearch(bbddd_candidates_files, query_files, correspondance_dict, masks)
 
-    map_at_k = RankingEvaluation.evaluateMAP(actuals, predictions)
-    print('Mean Average Precision: {:.2f}\n'.format(map_at_k))
+    print(RankingEvaluation.evaluateMAP(actuals, predictions))
 
     """Write results"""
     with open(qs_results_path, 'wb') as f:
