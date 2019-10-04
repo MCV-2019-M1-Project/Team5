@@ -12,12 +12,12 @@ Main steps:
 and order the DB images according these similarities.
 
 Tasks:
--Task 1: Create Museum and query image descriptors (BBDD & QS1)
--Task 2: Implement / compute similarity measures to compare images
--Task 3: Implement retrieval system (retrieve top K results)
--Task 4: Evaluation using map@k
--Task 5: Background removal using color (QS2). Compute descriptor on foreground (painting)
--Task 6: Evaluation of picture masks and retrieval system (QS2)
+- Task 1: Create Museum and query image descriptors (BBDD & QS1)
+- Task 2: Implement / compute similarity measures to compare images
+- Task 3: Implement retrieval system (retrieve top K results)
+- Task 4: Evaluation using map@k
+- Task 5: Background removal using color (QS2). Compute descriptor on foreground (painting)
+- Task 6: Evaluation of picture masks and retrieval system (QS2)
 
 - ###The structure of the code
 - --- Readme.md                   // help
