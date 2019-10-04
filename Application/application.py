@@ -61,7 +61,7 @@ def runRanking(bbdd_path, qs_path, qs_correspondance_path, qs_results_path, mask
         pickle.dump(predictions, f)
 
 
-def runMasksEvaluation(bbdd_path, qs_path, mask_correspondance_path):
+def runMasks(bbdd_path, qs_path, mask_correspondance_path):
 
     """Load all candidates from BBDD pictures"""
     bbddd_candidates = []
@@ -83,8 +83,6 @@ def runMasksEvaluation(bbdd_path, qs_path, mask_correspondance_path):
         mask_path_dirname = os.path.dirname(query_file)
         mask_path_basename = os.path.splitext(os.path.basename(query_file))[0] + "_result.png"
         mask_path = mask_path_dirname + "/" + mask_path_basename
-        print(maskImg)
-        print(mask_path)
         cv2.imwrite(mask_path, maskImg)
         mask_correspondance_dict.update({query_file: mask_path_basename})
 
@@ -94,6 +92,6 @@ def runMasksEvaluation(bbdd_path, qs_path, mask_correspondance_path):
 
 
 if __name__ == "__main__":
-    #runRanking(BBDD_PATH, QSD1_PATH, QSD1_CORRESPONDANCE_FILE, QSD1_RESULTS_FILE, False)
-    #runRanking(BBDD_PATH, QSD2_PATH, QSD2_CORRESPONDANCE_FILE, QSD2_RESULTS_FILE, True)
-    runMasksEvaluation(BBDD_PATH, QSD2_PATH, MASK_CORRESPONDANCE_RESULT_FILE)
+    runRanking(BBDD_PATH, QSD1_PATH, QSD1_CORRESPONDANCE_FILE, QSD1_RESULTS_FILE, False)
+    runRanking(BBDD_PATH, QSD2_PATH, QSD2_CORRESPONDANCE_FILE, QSD2_RESULTS_FILE, True)
+    runMasks(BBDD_PATH, QSD2_PATH, MASK_CORRESPONDANCE_RESULT_FILE)

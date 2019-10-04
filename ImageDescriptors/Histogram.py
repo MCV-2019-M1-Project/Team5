@@ -33,16 +33,16 @@ class MaskedHistogram(Histogram):
 
     def __init__(self, path, hsv=False, normalize=False):
         super().__init__(path, hsv, normalize)
+        self.MARGIN_VALUES = 10
         unmasked_histogram = self.histogram()
         max_rgb = self.extractMostFrequentRGB(unmasked_histogram)
         im = np.asarray(self.img)
-        mask = ~(np.asarray(im[:, :, 0] <= (max_rgb[0] + 2)) & np.asarray(im[:, :, 0] >= (max_rgb[0] - 2)) & \
-            np.asarray(im[:, :, 1] <= (max_rgb[1] + 2)) & np.asarray(im[:, :, 1] >= (max_rgb[1] - 2)) & \
-            np.asarray(im[:, :, 2] <= (max_rgb[2] + 2)) & np.asarray(im[:, :, 2] >= (max_rgb[2] - 2)))
+        mask = ((np.asarray(im[:, :, 0] <= (max_rgb[0] + self.MARGIN_VALUES)) & np.asarray(im[:, :, 0] >= (max_rgb[0] - self.MARGIN_VALUES)) & \
+            np.asarray(im[:, :, 1] <= (max_rgb[1] + self.MARGIN_VALUES)) & np.asarray(im[:, :, 1] >= (max_rgb[1] - self.MARGIN_VALUES)) & \
+            np.asarray(im[:, :, 2] <= (max_rgb[2] + self.MARGIN_VALUES)) & np.asarray(im[:, :, 2] >= (max_rgb[2] - self.MARGIN_VALUES))))
 
-        self.mask    = mask.astype(np.uint8)
-        self.maskimg = cv2.adaptiveThreshold(self.mask * 255, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 3, 0)
-
+        self.mask    = (~mask).astype(np.uint8)
+        self.maskimg = 255 * self.mask
 
     @staticmethod
     def extractMostFrequentRGB(unmasked_histogram):
