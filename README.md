@@ -1,17 +1,17 @@
-# Team5
-Members: Joan Fontanals, Yixiong Yang
-Date: 4 Oct 2019
+# Team5      
+Members: Joan Fontanals, Yixiong Yang      
+Date: 4 Oct 2019      
 
 This code is to search images from a large image database (DB) for finding paintings 
 in a museum image collection.
 
-Main steps:
+Main steps:    
 - Generate descriptors for all DB images;
 - Extract features from query image
 - Compute similarities between descriptors from the query image and each DB image descriptor,
 and order the DB images according these similarities.
 
-Tasks:
+Tasks:    
 - Task 1: Create Museum and query image descriptors (BBDD & QS1)
 - Task 2: Implement / compute similarity measures to compare images
 - Task 3: Implement retrieval system (retrieve top K results)
@@ -22,7 +22,7 @@ Tasks:
 How to run:      
 Just run the Application/application.py
 
-###The structure of the code
+The structure of the code        
 --- Readme.md                   // help              
 --- Application                 // main part to solve the result              
 ------- application.py          // run the _main_ to output all the results                
