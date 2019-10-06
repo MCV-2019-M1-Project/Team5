@@ -19,6 +19,9 @@ Tasks:
 - Task 5: Background removal using color (QS2). Compute descriptor on foreground (painting)
 - Task 6: Evaluation of picture masks and retrieval system (QS2)
 
+How to run:      
+Just run the Application/application.py
+
 ###The structure of the code
 --- Readme.md                   // help              
 --- Application                 // main part to solve the result              
