@@ -1,6 +1,5 @@
 from ImageRetrieval.Ranking import RankingSimilar
-from definitions import QSD1_PATH, QSD2_PATH, BBDD_PATH, K, QSD1_CORRESPONDANCE_FILE, \
-    QSD1_RESULTS_FILE, QSD2_CORRESPONDANCE_FILE, QSD2_RESULTS_FILE, MASK_CORRESPONDANCE_RESULT_FILE, MASK_STORE_PATH
+from definitions import *
 import pickle
 import os
 from Evaluation import RankingEvaluation, MaskEvaluation
@@ -8,7 +7,7 @@ from ImageDescriptors import *
 import cv2
 
 
-def computeSearch(bbddd_candidates_files, query_files, correspondance_dict, masks=False):
+def computeSearch(bbddd_candidates_files, query_files, correspondance_dict, masks=False, evaluate=False):
     """Loop over all the query images and compute the K most similar and the actual
     ground truth expected value so that then we can evaluate with MAP the performance of the
     process"""
@@ -16,16 +15,19 @@ def computeSearch(bbddd_candidates_files, query_files, correspondance_dict, mask
     predictions = []
     actuals = []
     for (i, query_file) in enumerate(sorted(query_files), 0):
-        if i in correspondance_dict:
-            similars = ranking.findKMostSimilar(query_file, "hellinger", masks)
-            results_index = [index for index, path in similars]
-            predictions.append(results_index)
+        print(query_file)
+        similars = ranking.findKMostSimilar(query_file, "hellinger", masks)
+        results_index = [index for index, path in similars]
+        print(results_index)
+        predictions.append(results_index)
+        if evaluate and i in correspondance_dict:
             actuals.append([correspondance_dict[i]])
 
+    print(predictions)
     return actuals, predictions
 
 
-def runRanking(bbdd_path, qs_path, qs_correspondance_path, qs_results_path, masks=False):
+def runRanking(bbdd_path, qs_path, qs_correspondance_path, qs_results_path, masks=False, evaluate=False):
     """Load all candidates from BBDD pictures"""
     bbddd_candidates_files = []
     for file in os.listdir(bbdd_path):
@@ -40,18 +42,20 @@ def runRanking(bbdd_path, qs_path, qs_correspondance_path, qs_results_path, mask
             query_files.append(path)
 
     """Load all correspondances for Q and create a dictionary from it"""
-    with open(qs_correspondance_path, 'rb') as f:
-        correspondance = pickle.load(f)
-
     correspondance_dict = {}
-    for query_bbddd_tuple in correspondance:
-        correspondance_dict.update(dict(query_bbddd_tuple))
+    if evaluate:
+        with open(qs_correspondance_path, 'rb') as f:
+            correspondance = pickle.load(f)
+
+        for query_bbddd_tuple in correspondance:
+            correspondance_dict.update(dict(query_bbddd_tuple))
 
     """Instantiate ranking object that will be able to find the most similar K pictures from candidates given a query image"""
-    actuals, predictions = computeSearch(bbddd_candidates_files, query_files, correspondance_dict, masks)
+    actuals, predictions = computeSearch(bbddd_candidates_files, query_files, correspondance_dict, masks, evaluate)
 
-    map_at_k = RankingEvaluation.evaluateMAP(actuals, predictions)
-    print('Mean Average Precision: {:.2f}\n'.format(map_at_k))
+    if evaluate:
+        map_at_k = RankingEvaluation.evaluateMAP(actuals, predictions)
+        print('Mean Average Precision: {:.2f}\n'.format(map_at_k))
 
     """Write results"""
     with open(qs_results_path, 'wb') as f:
@@ -131,7 +135,7 @@ def runMasksEvaluation(qs_path, mask_store_path):
 
 
 if __name__ == "__main__":
-    runRanking(BBDD_PATH, QSD1_PATH, QSD1_CORRESPONDANCE_FILE, QSD1_RESULTS_FILE, False)
-    runRanking(BBDD_PATH, QSD2_PATH, QSD2_CORRESPONDANCE_FILE, QSD2_RESULTS_FILE, True)
+    runRanking(BBDD_PATH, QSD1_PATH, QSD1_CORRESPONDANCE_FILE, QSD1_RESULTS_FILE, False, True)
+    runRanking(BBDD_PATH, QSD2_PATH, QSD2_CORRESPONDANCE_FILE, QSD2_RESULTS_FILE, True, True)
     runMasks(BBDD_PATH, QSD2_PATH, MASK_CORRESPONDANCE_RESULT_FILE, MASK_STORE_PATH)
     runMasksEvaluation(QSD2_PATH, MASK_STORE_PATH)

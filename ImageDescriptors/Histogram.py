@@ -27,6 +27,9 @@ class Histogram:
             cv2.normalize(histogram, histogram, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX)
         return histogram
 
+    def closeImg(self):
+        self.img = []
+
 
 #Task 5 is here
 class MaskedHistogram(Histogram):

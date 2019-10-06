@@ -1,6 +1,7 @@
 from ImageDescriptors.Histogram import *
 from ImageDescriptors.Similarity import *
 import heapq
+import sys
 
 """Define the Ranking method"""
 
@@ -28,15 +29,17 @@ def compare(img, queryhist, method):
 
 class RankingSimilar:
 
-    def __init__(self, candidates, k, precompute=True):
+    def __init__(self, candidates, k, precompute=False):
         idx_images = enumerate(sorted(candidates), 0)
         self.precomputed = precompute
-        if self.precomputed:
-            self.candidates = []
-            for (idx, img) in idx_images:
-                self.candidates.append((idx, Histogram(img).histogram()))
-        else:
-            self.candidates = idx_images
+        self.candidates = []
+        for (idx, img) in idx_images:
+            if self.precomputed:
+                hist = Histogram(img)
+                self.candidates.append((idx, hist.histogram()))
+                hist.closeImg()
+            else:
+                self.candidates.append((idx, img))
         self.k = k
 
     def findKMostSimilar(self, queryImg, method, masks=False):
