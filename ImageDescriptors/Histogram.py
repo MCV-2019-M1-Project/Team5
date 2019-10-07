@@ -1,8 +1,6 @@
 import cv2
 from definitions import CHANNELS, HIST_RANGE, HIST_SIZE
-import numpy as np
-import collections
-
+from Mask import MaskComputation
 
 # TASK 1 is done here
 class Histogram:
@@ -27,9 +25,6 @@ class Histogram:
             cv2.normalize(histogram, histogram, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX)
         return histogram
 
-    def closeImg(self):
-        self.img = []
-
 
 #Task 5 is here
 class MaskedHistogram(Histogram):
@@ -37,27 +32,8 @@ class MaskedHistogram(Histogram):
     def __init__(self, path, hsv=False, normalize=False):
         super().__init__(path, hsv, normalize)
         self.MARGIN_VALUES = 10
-        unmasked_histogram = self.histogram()
-        max_rgb = self.extractMostFrequentRGB(unmasked_histogram)
-        im = np.asarray(self.img)
-        mask = ((np.asarray(im[:, :, 0] <= (max_rgb[0] + self.MARGIN_VALUES)) & np.asarray(im[:, :, 0] >= (max_rgb[0] - self.MARGIN_VALUES)) & \
-            np.asarray(im[:, :, 1] <= (max_rgb[1] + self.MARGIN_VALUES)) & np.asarray(im[:, :, 1] >= (max_rgb[1] - self.MARGIN_VALUES)) & \
-            np.asarray(im[:, :, 2] <= (max_rgb[2] + self.MARGIN_VALUES)) & np.asarray(im[:, :, 2] >= (max_rgb[2] - self.MARGIN_VALUES))))
+        '''TODO: Idea: Here have a factory for the kind of mapping with different inputs so that I can have the masks with which I will run the MaskedHistogram'''
+        self.mask = MaskComputation.mostFrequentValueInHistogramBasedMask(self.histogram(), self.img)
 
-        self.mask    = (~mask).astype(np.uint8)
-        self.maskimg = 255 * self.mask
 
-    @staticmethod
-    def extractMostFrequentRGB(unmasked_histogram):
-        max_indexes = []
-        for channel in (0, 1, 2):
-            max_value = 0
-            index = 0
-            for (idx, value) in enumerate(unmasked_histogram[channel][0], 0):
-                if value >= max_value:
-                    max_value = value
-                    index = idx
-            max_indexes.append(index)
-
-        return max_indexes
 

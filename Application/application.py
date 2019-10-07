@@ -135,7 +135,7 @@ def runMasksEvaluation(qs_path, mask_store_path):
 
 
 if __name__ == "__main__":
-    runRanking(BBDD_PATH, QSD1_PATH, QSD1_CORRESPONDANCE_FILE, QSD1_RESULTS_FILE, False, True)
+    runRanking(BBDD_PATH, QSD1_PATH, QSD1_CORRESPONDANCE_FILE, QSD1_RESULTS_FILE, True, True)
     runRanking(BBDD_PATH, QSD2_PATH, QSD2_CORRESPONDANCE_FILE, QSD2_RESULTS_FILE, True, True)
     runMasks(BBDD_PATH, QSD2_PATH, MASK_CORRESPONDANCE_RESULT_FILE, MASK_STORE_PATH)
     runMasksEvaluation(QSD2_PATH, MASK_STORE_PATH)
